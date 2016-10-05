@@ -4,14 +4,14 @@ class Topic
 
 	def initialize(name)
 		@name = name
-		@block = "\t" + topic(@name)
+		@block = topic(@name)
 	end
 
 	def get_name
 		return @name
 	end
 
-	def get(hash)
+	def on(hash)
 		if hash.is_a?(Hash)
 			@block += category_topic(hash.keys[0], hash.values[0])
 		else
@@ -20,7 +20,7 @@ class Topic
 	end
 
 	def end
-		@block += "</topic>\n\n"
+		@block += "</topic>"
 		puts @block
 	end
 
