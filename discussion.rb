@@ -1,6 +1,8 @@
 # This code is written for Rocket generator which generates
 # AIML code out of Ruby methods.
 
+require_relative("src/core.rb")
+
 # Pozdravi
 on "Zdravo": random([
 	"Zdravo ljudsko biće!",
@@ -67,7 +69,7 @@ on "Ko si ti": random([
 ])
 
 on "Šta sve znaš": random([
-	"Skoro sve što te interesuje."
+	"Skoro sve što te interesuje.",
 	"Sve što i ti znaš."
 ])
 
