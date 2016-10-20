@@ -13,7 +13,7 @@ def category_end
 end
 
 def pattern(content)
-	"<pattern>#{content.upcase}</category>"
+	"<pattern>#{content.upcase}</pattern>"
 end
 
 def template_start
