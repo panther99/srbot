@@ -1,3 +1,6 @@
+# Not yet fully implemented: don't use for production purposes!
+# Copyright: Nikola S.
+
 # Elements are used in templates when code is translated to AIML
 # to build easier formatting of the final code
 

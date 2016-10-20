@@ -1,3 +1,6 @@
+# Not yet fully implemented: don't use for production purposes!
+# Copyright: Nikola S.
+
 require_relative "elements.rb"
 require_relative "topic.rb"
 
@@ -119,4 +122,12 @@ def check(var, val)
 	end
 	@block += "#{condition_end}"
 	@block
+end
+
+def get(name, content)
+	return "<get name=\"#{name}\">#{content}</get>"
+end
+
+def set(name, content)
+	return "<set name=\"#{name}\">#{content}</set>"
 end
