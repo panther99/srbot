@@ -12,22 +12,35 @@ Tags are easier for beginners but for bigger projects it's pretty hard to write 
 
 ## Installation
 
-If Ruby is installed on your system everything you have to do is to clone this repository or download *core.rb* and *topic.rb* files and put them in the same directory. After that, just import core to your Ruby script with:
+If Ruby is already installed on your system, install ```pretty-xml``` gem, clone this repository and require core file.
 
 ```ruby
-require_relative "dir/core.rb"
+require_relative "lib/core.rb"
 ```
 
-And you're ready to go!
-
 ## Usage
+
+To start writing in Rocket, define new specification:
+
+```ruby
+bot = Bot.new("botname")
+```
+
+You can define options for specification:
+
+```ruby
+bot.options({
+	debug: false,	# define as true if you want to get logs from translation (helpful on bigger projects)
+	pretty: true	# define as true if you want to get nicely formatted code
+})
+```
 
 ### Simple routes
 
 ```ruby
 # Patterns are automatically uppercased
 # when conversion begins
-on "How are you" => "I'm fine, thanks!"
+bot.on "How are you" => "I'm fine, thanks!"
 ```
 
 ```xml
@@ -40,7 +53,7 @@ on "How are you" => "I'm fine, thanks!"
 ### Random responses
 
 ```ruby
-on "*" => random([
+bot.on "*" => rand([
 	"I don't understand you!",
 	"Write clearly!"
 ])
@@ -58,59 +71,40 @@ on "*" => random([
 </category>
 ```
 
-### Topics
-
-```ruby
-music = Topic.new("music")
-music.on "_ favorite band" => "Rolling Stones"
-music.on "_ favorite genre" => "Rock"
-music.end
-```
-
-```xml
-<topic name="music">
-	<category>
-		<pattern>_ FAVORITE BAND</pattern>
-		<template>Rolling Stones</template>
-	</category>
-
-	<category>
-		<pattern>_ FAVORITE GENRE</pattern>
-		<template>Rock</template>
-	</category>
-</topic>
-```
-
 ### Conditions
 
 ```ruby
+# You can chain multiple conditions
+# using + operator
 on "My name is *" =>
-set("name", "#{star}")
-check("name", "Gordon") { |t|
-	t.push "Glad to meet you Gordon!"
-} +
-check("name", "Mia") { |t|
-	t.push "What's up Mia?"
-} +
-check("name", "John") { |t|
-	t.push "Hi John!"
-}
+set({"name" => "#{star}"}) +
+cond({"name" => "Mia"}, "Hi darling!") +
+cond({"name" => "Gordon"}, "Nice to meet you Gordon!"})
 ```
 
 ```xml
 <category>
 	<pattern>MY NAME IS *</pattern>
 	<template>
-		<set name="name" value="<star/>">
-		<condition name="name" value="Gordon">
-			Glad to meet you Gordon!
-		</condition>
+		<set name="name"><star/></set>
 		<condition name="name" value="Mia">
-			What's up Mia?
+			Hi darling!
 		</condition>
-		<condition name="name" value="John">
-			Hi John!
+		<condition name="name" value="Gordon">
+			Nice to meet you Gordon!
 		</condition>
 	</template>
 </category>
+```
+
+### AIML content
+
+All generated code is available via ```get_content``` method for each Bot instance:
+
+```ruby
+bot = Bot.new("chatbot")
+# ... code ...
+
+# Output: code converted to AIML
+puts bot.get_content
 ```
